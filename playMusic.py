@@ -2,6 +2,10 @@ import threading
 import time
 from playsound3 import playsound
 
+#Sound
+bgMusic = True
+sfx = True
+
 bgm_playlist = [
     'music/BGM/casino-vip-music-vip-casino-music-7-469284.mp3',
     'music/BGM/electroanimals-jazz-casino-593404.mp3',
@@ -15,7 +19,7 @@ def play_bgm_loop():
         try:
             playsound(track, block = True)
         except Exception as e:
-            Print(f"Error Playing {track}: {e}")
+            print(f"Error Playing {track}: {e}")
             time.sleep(1)
 #start music cycle
 bgm_thread = threading.Thread(target = play_bgm_loop, daemon=True)
