@@ -1,12 +1,12 @@
 import random
+import stats
+import rps
+import coinFlip
+import chooseGamemode
 from time import sleep as wait
 from playsound3 import playsound
 from playMusic import bgm_thread,sfx,bgMusic
-import rps
-import coinFlip
 from death import Death
-
-gamemode = "rps"
 
 print("Welcome to RPS")
 if bgMusic == True:
@@ -42,24 +42,12 @@ if asw.lower() == "n" or asw.lower() == "no":
     quit()
 
 
-while 0 < rps.money < 1000000:
-    new_gamemode = input("Enter New gamemode [RPS, Coin] or enter to continue with last gamemode: ").lower()
-    if new_gamemode == "rps":
-        new_gamemode = gamemode
-        rps.RPS()
-    elif new_gamemode == "coin":
-            new_gamemode = gamemode
-            coinFlip.coinFlip()
-    elif new_gamemode == "":
-        if gamemode == "rps":
-            rps.RPS()
-        elif gamemode == "coin":
-            coinFlip.coinFlip()
-    
+while 0 < stats.money < 1000000:
+    chooseGamemode.chooseGamemode()
 
 # Once the loop ends, check if they went broke or won the game
-if rps.money <= 0:
+if stats.money <= 0:
     Death()
-elif rps.money >= 1000000:
+elif stats.money >= 1000000:
     print("You beat the house and won $1,000,000!")
     wait(10)

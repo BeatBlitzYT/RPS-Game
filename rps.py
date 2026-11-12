@@ -1,76 +1,56 @@
 import random
 from time import sleep as wate
+import stats
 
-#RPS
-RPS_moves = ['rock', 'raper', 'rcissors']
-RPS_moves_player = ['r','p','s']
-
-#win loss
-w = 0
-l =0
-t = 0
-
-#money
-money = 10
-bet = 0
-
+# RPS
+RPS_moves = ['rock', 'paper', 'scissors']
+valid_choices = ['r', 'p', 's', 'rock', 'paper', 'scissors']
 
 def RPS():
-    global money
-    global bet
-    global w
-    global l
-    global t
+    print("Goal to win Rock Paper Scissors")
+    stats.bet = input("Account Balance: $" + str(stats.money) + "\nEnter Your Bet Amount: ")
+    while not stats.bet.isdigit() or int(stats.bet) > int(stats.money) or int(stats.bet) <= 0:
+        stats.bet = input("Account Balance: $" + str(stats.money) + "\nEnter Your <VALID> Bet Amount: ")
 
-    bet = input("Account Ballence: $" + str(money) + "\nEnter Your Bet Amount: ")
-    while not bet.isdigit() or int(bet) > int(money) or int(bet) <= 0:
-        bet = input("Account Ballence: $" + str(money) + "\nEnter Your <VALID> Bet Amount: ")
-    player_RPS_choice = input("Your Choices Are: Rock, Paper, Scissors (Or type R, P, S)\n")
-    #while player_RPS_choice != RPS_moves or player_RPS_choice.lower != 'r' or player_RPS_choice == '':
-    #    player_RPS_choice = input("Your Choices Are: Rock, Paper, Scissors (Or type R, P, S)\n")
+    player_RPS_choice = input("Your Choices Are: Rock, Paper, Scissors (Or type R, P, S)\n").lower()
+    while player_RPS_choice not in valid_choices:
+        player_RPS_choice = input("Invalid choice. Type Rock, Paper, Scissors (or R, P, S):\n").lower()
+
     computer_RPS_choice = random.choice(RPS_moves)
-    #loss state
-    if player_RPS_choice.lower() == "r" or player_RPS_choice.lower() == "rock" and computer_RPS_choice == "paper":
-        game_status = "lose"
-        l += 1
-    elif player_RPS_choice.lower() == "p" or player_RPS_choice.lower() == "paper" and computer_RPS_choice == "scissors":
-        game_status = "lose"
-        l += 1
-    elif player_RPS_choice.lower() == "s" or player_RPS_choice.lower() == "scissors" and computer_RPS_choice == "rock":
-        game_status = "lose"
-        l += 1
-    #win state
-    elif player_RPS_choice.lower() == "r" or player_RPS_choice.lower() == "rock" and computer_RPS_choice == "scissors":
-        game_status = "win"
-        w += 1
-    elif player_RPS_choice.lower() == "p" or player_RPS_choice.lower() == "paper" and computer_RPS_choice == "rock":
-        game_status = "win"
-        w += 1
-    elif player_RPS_choice.lower() == "s" or player_RPS_choice.lower() == "scissors" and computer_RPS_choice == "paper":
-        game_status = "win"
-        w += 1
-    #tie state
-    elif player_RPS_choice.lower() == "r" or player_RPS_choice.lower() == "rock" and computer_RPS_choice == "rock":
-        game_status = "tie"
-        t += 1
-    elif player_RPS_choice.lower() == "p" or player_RPS_choice.lower() == "paper" and computer_RPS_choice == "paper":
-        game_status = "tie"
-        t += 1
-    elif player_RPS_choice.lower() == "s" or player_RPS_choice.lower() == "scissors" and computer_RPS_choice == "scissors":
-        game_status = "tie"
-        t += 1
-    #fail to enter player choice
-    else:# player_RPS_choice.lower() != 'r' or player_RPS_choice.lower() != "rock" or player_RPS_choice.lower() != "p" or player_RPS_choice.lower() != "paper" or player_RPS_choice.lower() != "s" or player_RPS_choice.lower() != "scissors":
-        game_status = "lose"
-        l += 1
-        print("You Failed to think of an option in time and loss")
+    print("Computer chose:", computer_RPS_choice)
 
+    # loss state
+    if player_RPS_choice in ["r", "rock"] and computer_RPS_choice == "paper":
+        game_status = "lose"
+        stats.RPS_l += 1
+    elif player_RPS_choice in ["p", "paper"] and computer_RPS_choice == "scissors":
+        game_status = "lose"
+        stats.RPS_l += 1
+    elif player_RPS_choice in ["s", "scissors"] and computer_RPS_choice == "rock":
+        game_status = "lose"
+        stats.RPS_l += 1
+    # win state
+    elif player_RPS_choice in ["r", "rock"] and computer_RPS_choice == "scissors":
+        game_status = "win"
+        stats.RPS_w += 1
+    elif player_RPS_choice in ["p", "paper"] and computer_RPS_choice == "rock":
+        game_status = "win"
+        stats.RPS_w += 1
+    elif player_RPS_choice in ["s", "scissors"] and computer_RPS_choice == "paper":
+        game_status = "win"
+        stats.RPS_w += 1
+    # tie state
+    else:
+        game_status = "tie"
+        stats.RPS_t += 1
+
+    #money return
     if game_status == "win":
-        money += int(bet)
-        print("you got lucky and won.")
+        stats.money += int(stats.bet)
+        print("You got lucky and won.")
     elif game_status == "lose":
-        money -= int(bet)
-        print("house always WINS, LOSER")
+        stats.money -= int(stats.bet)
+        print("House always WINS, LOSER")
     elif game_status == "tie":
-        print("Push (Nothing happed)")
-        bet = 0
+        print("Push (Nothing happened)")
+        stats.bet = 0

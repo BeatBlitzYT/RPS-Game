@@ -3,7 +3,7 @@ import time
 from playsound3 import playsound
 
 #Sound
-bgMusic = True
+bgMusic = False
 sfx = True
 
 bgm_playlist = [
