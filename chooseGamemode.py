@@ -16,7 +16,7 @@ def chooseGamemode():
             gamemode = new_gamemode
             coinFlip.coinFlip()
     elif new_gamemode == "money":
-        print(stats.money)
+        print("$" + stats.money)
         new_gamemode = input("Enter New gamemode [RPS, Coin, Quit] or enter to continue with last gamemode: ").lower()
         if new_gamemode == "rps":
             gamemode = new_gamemode
